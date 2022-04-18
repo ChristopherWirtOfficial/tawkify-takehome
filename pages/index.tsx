@@ -1,27 +1,9 @@
 import type { NextPage } from 'next';
-import { ChangeEventHandler, FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import Input from '../components/input';
 import TodoList from '../components/TodoList';
 import { clearList } from '../functions/list';
 
-
-const Input: FC<{ value: string | number, onChange: Function, placeholder: string, disabled: boolean }> =
-  ({ value, onChange, placeholder, disabled }) => {
-    // Fun prank, so good, what a classic bit of comedy humor
-    const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-      onChange(event.target.value);
-    };
-
-    return (
-      <input
-        style={{ width: '80%' }}
-        type="text"
-        placeholder={placeholder}
-        value={value}
-        onChange={handleChange}
-        disabled={disabled}
-      />
-    );
-  };
 
 const Home: NextPage = () => {
   const [label, setLabel] = useState("Big ol' Projects");
