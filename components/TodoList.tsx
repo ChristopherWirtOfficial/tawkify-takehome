@@ -7,25 +7,30 @@ const TodoList: React.FC<{ label: string, placeholder: string, disabled?: boolea
     label, placeholder, disabled = false, required = false, max,
   }) => {
     const [todos, setTodos] = useState<Todo[]>([]);
+    const [todo, setTodo] = useState<string>('');
+
+    // Use our gapless function to get the list of todos
     const getTodos = async () => {
       const todos = await getList();
       setTodos(todos);
     };
 
+    // Init todos on mount
     useEffect(() => {
       getTodos();
     }, []);
+
 
     const clear = async () => {
       setTodos(await clearList());
     };
 
-    const [todo, setTodo] = useState<string>('');
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setTodo(event.target.value);
     };
 
+    // When the user adds a new todo, we add it to the list with a gapless function `addListItem`
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       if (!todo.trim()) {
@@ -38,6 +43,7 @@ const TodoList: React.FC<{ label: string, placeholder: string, disabled?: boolea
       setTodo('');
     };
 
+    // Call the gapless deleteItem and set the todos back to the new list
     const handleDelete = async (id: string) => {
       setTodos(await deleteItem(id));
     };
