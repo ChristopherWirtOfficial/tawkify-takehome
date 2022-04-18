@@ -65,7 +65,7 @@ if (IS_CLIENT) {
 
 // As long as every bit of client-server communication info is "computed" or provided deterministically,
 //   then the client and server don't have to agree on anything before getting started. This is the real key here.
-const gapless = <ArgType extends unknown[], ReturnType>(gaplessKey: string, functor: (...args: ArgType) => ReturnType) => {
+const gapless = <ArgType extends unknown[], ReturnType>(gaplessKey: string, functor: (...args: ArgType) => ReturnType): (...args: ArgType) => Promise<ReturnType> => {
   if (IS_CLIENT) {
 
     // From the client's perspective, this is the actual checkZip function that they're calling.
@@ -81,9 +81,9 @@ const gapless = <ArgType extends unknown[], ReturnType>(gaplessKey: string, func
         args,
       });
 
-      return new Promise((resolve, reject) => {
+      return new Promise<ReturnType>((resolve, reject) => {
         // Create a function reference that, when called, 
-        const checkResultsUntilFindingOurs = (result: GaplessFunctionResult<ArgType>) => {
+        const checkResultsUntilFindingOurs = (result: GaplessFunctionResult<ReturnType>) => {
           if (result.gaplessKey === gaplessKey && result.executionID === executionID) {
             // We found our result, so resolve the promise with it
             resolve(result.result);
