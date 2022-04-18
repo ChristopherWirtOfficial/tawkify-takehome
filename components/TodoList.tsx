@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { addListeItem as addListItem, clearList, deleteItem, getList, Todo } from '../functions/list';
+import { addListItem, clearList, deleteItem, getList } from '../functions/client-helpers';
+import { Todo } from '../functions/list';
 import TodoItem from './TodoItem';
 
 const TodoList: React.FC<{ label: string, placeholder: string, disabled?: boolean, required?: boolean, max?: number }> =
