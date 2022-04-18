@@ -75,7 +75,6 @@ const TodoList: React.FC<{ label: string, placeholder: string, disabled?: boolea
         <ul>
           {todos.map(item => (<TodoItem key={item.id} todo={item} onDelete={id => handleDelete(id)} disabled={disabled} />))}
         </ul>
-        <button disabled={disabled} type="button" onClick={clear}>Reset</button>
       </div>
     );
   };
